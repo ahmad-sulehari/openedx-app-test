@@ -24,6 +24,8 @@ class IosDiscoverPage(IosBasePage):
         self._results_for_text = Element(
             AppiumBy.IOS_PREDICATE, 'label CONTAINS "results for" AND type == "XCUIElementTypeStaticText"'
         )
+        self._heading_title_part1 = Element(AppiumBy.ACCESSIBILITY_ID, "Build skills. Earn a certificate.")
+        self._heading_title_part2 = Element(AppiumBy.ACCESSIBILITY_ID, "Advance your career.")
 
     @property
     def all_filters_dropdown(self) -> Element:
@@ -60,3 +62,21 @@ class IosDiscoverPage(IosBasePage):
             Element: results for text element
         """
         return self._results_for_text
+
+    @property
+    def heading_title_part1(self) -> Element:
+        """
+        Get heading title
+        Returns:
+            Element: heading title element
+        """
+        return self._heading_title_part1
+
+    @property
+    def heading_title_part2(self) -> Element:
+        """
+        Get heading title
+        Returns:
+            Element: heading title element
+        """
+        return self._heading_title_part2
