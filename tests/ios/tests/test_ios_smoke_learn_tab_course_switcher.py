@@ -6,7 +6,6 @@ import pytest
 from framework import expect
 from framework.element import Element
 from tests.common.enums.attributes import ElementAttribute
-from tests.common.globals import Globals
 from tests.ios.pages.ios_main_dashboard import IosMainDashboard
 from tests.ios.pages.ios_my_courses_list import IosMyCoursesList
 
@@ -35,25 +34,19 @@ class TestIosCourseSwitcher:
         driver = ios_login
         Element.set_driver(driver)
         Element.set_logger(setup_logging)
-        global_contents = Globals(setup_logging)
         main_dashboard = IosMainDashboard()
         my_courses_list = IosMyCoursesList()
 
         main_dashboard.learn_tab.click()
-        switcher_label = my_courses_list.courses_dropdown_menu
-        expect(switcher_label).to_have("Courses", ElementAttribute.LABEL)
-        switcher_label.click()
-        course_switcher = global_contents.wait_and_get_element(driver, "Courses")
-        assert switcher_label.get_attribute("label") == "Courses"
-        programs_switcher = global_contents.wait_and_get_element(driver, "Programs")
-        assert programs_switcher.text == "Programs"
-        course_switcher.click()
-        assert switcher_label.get_attribute("label") == "Courses"
-        switcher_label.click()
-        programs_switcher = global_contents.wait_and_get_element(driver, "Programs")
-        programs_switcher.click()
-        assert switcher_label.get_attribute("label") == "Programs"
-        switcher_label.click()
-        course_switcher = global_contents.wait_and_get_element(driver, "Courses")
-        course_switcher.click()
-        assert switcher_label.get_attribute("label") == "Courses"
+        expect(my_courses_list.courses_dropdown_menu).to_have("Courses", ElementAttribute.LABEL)
+        my_courses_list.courses_dropdown_menu.click()
+        expect(my_courses_list.courses_option).to_have("Courses", ElementAttribute.LABEL)
+        expect(my_courses_list.programs_option).to_have("Programs", ElementAttribute.LABEL)
+        my_courses_list.courses_option.click()
+        expect(my_courses_list.courses_dropdown_menu).to_have("Courses", ElementAttribute.LABEL)
+        my_courses_list.courses_dropdown_menu.click()
+        my_courses_list.programs_option.click()
+        expect(my_courses_list.courses_dropdown_menu).to_have("Programs", ElementAttribute.LABEL)
+        my_courses_list.courses_dropdown_menu.click()
+        my_courses_list.courses_option.click()
+        expect(my_courses_list.courses_dropdown_menu).to_have("Courses", ElementAttribute.LABEL)

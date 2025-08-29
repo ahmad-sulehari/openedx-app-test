@@ -20,6 +20,17 @@ class IosCourseHomeTab(IosBasePage):
         self._next_button = Element(AppiumBy.IOS_PREDICATE, 'label == "Next"')
         self._previous_button = Element(AppiumBy.IOS_PREDICATE, 'label == "Prev"')
         self._module_name_selector = 'label == "{}"'
+        self._back_button = Element(AppiumBy.ACCESSIBILITY_ID, "back_button")
+
+    @property
+    def back_button(self) -> Element:
+        """
+        get back button
+        Returns:
+            Element: back button
+
+        """
+        return self._back_button
 
     def component_navigation(self, retries=5) -> Element:
         """
@@ -36,7 +47,7 @@ class IosCourseHomeTab(IosBasePage):
 
         self.next_btn.click()
 
-        if self.finish_button.exists():
+        if self.finish_button.exists(raise_exception=False):
             return self.finish_button
         else:
             return self.component_navigation(retries=retries - 1)

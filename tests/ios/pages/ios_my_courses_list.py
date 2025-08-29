@@ -28,6 +28,39 @@ class IosMyCoursesList(IosBasePage):
         self._my_course_arrow_image = Element(AppiumBy.ACCESSIBILITY_ID, "course_item")
         self._courses_dropdown_menu = Element(AppiumBy.ACCESSIBILITY_ID, "dropdown_menu_text")
         self._course_demoX = Element(AppiumBy.ACCESSIBILITY_ID, "DemoX")
+        self._programs = Element(AppiumBy.ACCESSIBILITY_ID, "Programs")
+        self._courses = Element(AppiumBy.ACCESSIBILITY_ID, "Courses")
+
+    @property
+    def my_courses_arrow_image(self) -> Element:
+        """
+        Get my course arrow image
+        Returns:
+            Element: my course arrow image
+        """
+        return self._my_course_arrow_image
+
+    @property
+    def courses_option(self) -> Element:
+        """
+        Get courses option
+
+        Returns:
+             Element: courses option element
+        """
+
+        return self._courses
+
+    @property
+    def programs_option(self) -> Element:
+        """
+        Get program option
+
+        Returns:
+             Element: program option element
+        """
+
+        return self._programs
 
     @property
     def my_courses_header_text(self) -> Element:

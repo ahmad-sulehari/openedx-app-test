@@ -98,6 +98,7 @@ class CustomAssertions:
         if case:
             actual_value = actual_value.lower() if case == "lower" else actual_value.upper()
 
+        # Todo: need to default msg for not condition
         default_msg = f'Expected "{expected_value}" but found "{actual_value}"'
         custom_msg = self._custom_message or default_msg
         match_result = expected_value == actual_value
@@ -110,9 +111,22 @@ class CustomAssertions:
             expected_value (Union[int, float]): The value to compare against.
         """
         actual_value = self._locator.get_attribute(attribute)
+        # Todo: need to default msg for not condition
         default_msg = f"Expected value to be greater than {expected_value}, but found {actual_value}"
         custom_msg = self._custom_message or default_msg
         assert actual_value > expected_value != self._is_not, custom_msg
+
+    def to_have_count(self, expected_count: int):
+        """
+        to verify the count of elements found
+        Args:
+            expected_count: (int): the count to be expected
+        """
+        count = self._locator.find_all().count()
+        # Todo: need to default msg for not condition
+        default_msg = f"Expected value to be equal to {expected_count}, but found {count}"
+        custom_msg = self._custom_message or default_msg
+        assert count == expected_count != self._is_not, custom_msg
 
     def to_match(
         self,

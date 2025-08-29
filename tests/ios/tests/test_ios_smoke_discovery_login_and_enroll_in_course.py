@@ -212,5 +212,5 @@ class TestIosDiscoveryLoginAndEnroll:
 
         with allure.step("open learn tab"):
             main_dashboard.learn_tab.click()
-            expect(main_dashboard.course_item_demoX).to_exist()
-            main_dashboard.course_item_demoX.get_child_element(main_dashboard.course_name_demoX)
+            main_dashboard.progress_bar.wait_to_disappear()
+            expect(main_dashboard.course_name_demoX).to_exist()

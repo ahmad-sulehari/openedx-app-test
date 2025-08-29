@@ -45,20 +45,25 @@ class TestIosMyCoursesList:
         Element.set_driver(driver)
         Element.set_logger(setup_logging)
         my_courses_list = IosMyCoursesList()
-        expect(my_courses_list.my_courses_header_text).to_have(values.MAIN_DASHBOARD_LEARN_TAB)
+
+        expect(my_courses_list.my_courses_header_text).to_have(values.MAIN_DASHBOARD_LEARN_TAB, ElementAttribute.LABEL)
         expect(my_courses_list.get_my_course_image).to_be_visible()
-        expect(my_courses_list.get_my_course_org_text).to_have(values.MAIN_DASHBOARD_COURSE_ORG)
-        expect(my_courses_list.get_my_course_name_text).to_have(values.MAIN_DASHBOARD_COURSE_NAME)
+        expect(my_courses_list.get_my_course_org_text).to_have(values.MAIN_DASHBOARD_COURSE_ORG, ElementAttribute.LABEL)
+        expect(my_courses_list.get_my_course_name_text).to_have(
+            values.MY_COURSES_SECOND_COURSE_NAME, ElementAttribute.LABEL
+        )
         buttons = IosMyCoursesList.find_all_views_on_screen(IosClassViews.BUTTON)
         due_assignment = buttons[5]
-        expect(due_assignment).to_contain("Assignments")
+        expect(due_assignment).to_contain("Assignments", ElementAttribute.LABEL)
         resume_course = buttons[6]
-        expect(resume_course).to_contain("Resume")
+        expect(resume_course).to_contain("Resume", ElementAttribute.LABEL)
         second_course = buttons[8]
-        expect(second_course).to_have(values.MAIN_DASHBOARD_COURSE_NAME)
+        expect(second_course).to_have(values.MY_COURSES_SECOND_COURSE_NAME, ElementAttribute.LABEL)
         third_course = buttons[9]
-        expect(third_course).to_have("How to Learn Online")
-        expect(my_courses_list.my_courses_welcome_back_text).to_contain(values.MAIN_DASHBOARD_COURSE_DESCRIPTION)
+        expect(third_course).to_have("How to Learn Online", ElementAttribute.LABEL)
+        expect(my_courses_list.my_courses_welcome_back_text).to_contain(
+            values.MAIN_DASHBOARD_COURSE_DESCRIPTION, ElementAttribute.LABEL
+        )
         assert my_courses_list.my_courses_welcome_back_text.click()
 
     def test_view_all_courses(self, set_capabilities, setup_logging):
@@ -78,23 +83,29 @@ class TestIosMyCoursesList:
         my_courses_list = IosMyCoursesList()
         course_dashboard_page = IosCourseDashboard()
 
-        expect(my_courses_list.get_all_courses_header_text).to_have(values.ALL_COURSES_HEADER_LABEL)
-        expect(my_courses_list.get_all_courses_label).to_have(values.ALL_COURSES_LABEL)
-        assert my_courses_list.get_all_courses_label.click()
-        all_enrolled_courses = global_contents.get_elements_by_name_ios(set_capabilities, "course_item")
-        assert len(all_enrolled_courses) == 3
+        expect(my_courses_list.get_all_courses_header_text).to_have(
+            values.ALL_COURSES_HEADER_LABEL, ElementAttribute.LABEL
+        )
+        expect(my_courses_list.get_all_courses_label).to_have(values.ALL_COURSES_LABEL, ElementAttribute.LABEL)
+        my_courses_list.get_all_courses_label.click()
+        expect(my_courses_list.my_courses_arrow_image).to_have_count(2)
 
-        expect(my_courses_list.all_courses_in_progress_label).to_have(values.ALL_COURSES_INPROGRESS_LABEL)
-        assert my_courses_list.all_courses_in_progress_label.click()
-        in_progress_courses = global_contents.get_elements_by_name_ios(set_capabilities, "course_item")
-        assert len(in_progress_courses) == 2
+        expect(my_courses_list.all_courses_in_progress_label).to_have(
+            values.ALL_COURSES_INPROGRESS_LABEL, ElementAttribute.LABEL
+        )
+        my_courses_list.all_courses_in_progress_label.click()
+        expect(my_courses_list.my_courses_arrow_image).to_have_count(2)
 
-        expect(my_courses_list.get_all_courses_completed_label).to_have(values.ALL_COURSES_COMPLETED_LABEL)
+        expect(my_courses_list.get_all_courses_completed_label).to_have(
+            values.ALL_COURSES_COMPLETED_LABEL, ElementAttribute.LABEL
+        )
         assert my_courses_list.get_all_courses_completed_label.click()
         completed_courses = global_contents.get_element_by_name_ios(set_capabilities, "No Completed Courses")
         assert completed_courses.text == "No Completed Courses"
 
-        expect(my_courses_list.get_all_courses_expired_label).to_have(values.ALL_COURSES_EXPIRED_LABEL)
+        expect(my_courses_list.get_all_courses_expired_label).to_have(
+            values.ALL_COURSES_EXPIRED_LABEL, ElementAttribute.LABEL
+        )
         assert my_courses_list.get_all_courses_expired_label.click()
         expired_courses = global_contents.get_element_by_name_ios(set_capabilities, "How to Learn Online")
         assert expired_courses.text == "How to Learn Online"
